@@ -34,7 +34,7 @@ def agregar_con(consolas, ventas):
         print("Ingreso inválido")
         return
 
-    ano = int(input("Ingrese el año: "))
+    ano = input("Ingrese el año: ")
     val_4 = val_ano(ano)
     if val_4 == False:
         print("Ingreso inválido.")
@@ -46,7 +46,7 @@ def agregar_con(consolas, ventas):
         print("Ingreso inválido.")
         return
 
-    stock = int(input("Ingrese el stock: "))
+    stock = input("Ingrese el stock: ")
     val_6 = val_stock(stock)
     if val_6 == False:
         print("Ingreso inválido.")
@@ -56,7 +56,7 @@ def agregar_con(consolas, ventas):
     ventas[sigla] = [precio, stock]
 
 def buscar_con(consolas, ventas):
-    sigla = input("Ingrese la sigla: ")
+    sigla = input("Ingrese la sigla: ").upper().strip()
     if sigla in consolas:
         print("=== Consola Encontrada ===")
         print(f"Sigla            :  {sigla}")
@@ -79,6 +79,19 @@ def elim_con(consolas, ventas):
         del ventas[resultado]
         print("Consola eliminada.")
 
+def mostrar_con(consolas, ventas):
+    cont = 0
+    if not consolas:
+        print("No hay consolas registradas.")
+        
+    print("="*20)
+    print("LISTADO COMPLETO DE CONSOLAS")
+    print("="*20)
+    for sigla in consolas:
+        print(f"{sigla} | {consolas[sigla][0]} | {consolas[sigla][1]} | {consolas[sigla][2]} | ${ventas[sigla][0]} | {ventas[sigla][1]}")
+        cont = cont + 1
+    
+    print(f"Total de consolas: {cont}")
 
 def val_sigla(consolas, sigla):
     if len(sigla) < 2 or len(sigla) > 5:
@@ -93,13 +106,7 @@ def val_sigla(consolas, sigla):
     return True
 
 def val_nombre(nombre):
-    if len(nombre) < 3 or len(nombre) > 40:
-        return False
-
-    if not nombre:
-        return False
-    
-    return True
+    return 3 <= len(nombre.strip()) <= 40
 
 def val_fab(fabricante):
     if len(fabricante) < 2 or len(fabricante) > 30:
@@ -111,19 +118,16 @@ def val_fab(fabricante):
     return True
 
 def val_ano(ano):
-    if ano < 1972 or ano > 2025:
-        return False
-
-    return True
+    return ano.isdigit() and "1972" <= ano <= "2025"
 
 def val_precio(precio):
-    if precio <= 0:
+    try:
+        return float(precio) > 0
+    except:
         return False
-    
-    return True
 
 def val_stock(stock):
-    if stock < 0:
+    if not stock.isdigit():
         return False
     
     return True
@@ -137,7 +141,7 @@ while True:
     elif op == 3:
         elim_con(consolas, ventas)
     elif op == 4:
-        pass
+        mostrar_con(consolas, ventas)
     elif op == 5:
         print("Gracias por usar nuestro programa.")
         break
