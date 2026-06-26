@@ -1,5 +1,9 @@
-consolas = {}
-ventas = {}
+consolas = {
+    "PS5": ["PlayStation 5", "Sony", 2020]
+}
+ventas = {
+    "PS5": [649990.0, 15]
+}
 
 def menu_int():
     print("======== MENU ========")
@@ -8,10 +12,12 @@ def menu_int():
     print("3. Eliminar consola")
     print("4. Mostrar todas las consolas")
     print("5. Salir")
+    op = int(input("-> "))
+    return op
 
 def agregar_con(consolas, ventas):
     sigla = input("Ingrese la sigla: ")
-    val_1 = val_sigla(sigla)
+    val_1 = val_sigla(consolas,sigla)
     if val_1 == False:
         print("Ingreso inválido.")
         return
@@ -46,7 +52,21 @@ def agregar_con(consolas, ventas):
         print("Ingreso inválido.")
         return
     
-    
+    consolas[sigla] = [nombre, fabricante, ano]
+    ventas[sigla] = [precio, stock]
+
+def buscar_con(consolas, ventas):
+    sigla = input("Ingrese la sigla: ")
+    if sigla in consolas:
+        print("=== Consola Encontrada ===")
+        print(f"Sigla            :  {sigla}")
+        print(f"Nombre           :  {consolas[sigla][0]}")
+        print(f"Fabricante       :  {consolas[sigla][1]}")
+        print(f"Año lanz.        :  {consolas[sigla][2]}")
+        print(f"Precio           :  ${ventas[sigla][0]}")
+        print(f"Stock            :  {ventas[sigla][1]} unidades")
+    else:
+        print("Consola no encontrada.")
 
 def val_sigla(consolas, sigla):
     if len(sigla) < 2 or len(sigla) > 5:
@@ -95,3 +115,17 @@ def val_stock(stock):
         return False
     
     return True
+
+while True:
+    op = menu_int()
+    if op == 1:
+        agregar_con(consolas,ventas)
+    elif op == 2:
+        buscar_con(consolas, ventas)
+    elif op == 3:
+        pass
+    elif op == 4:
+        pass
+    elif op == 5:
+        print("Gracias por usar nuestro programa.")
+        break
