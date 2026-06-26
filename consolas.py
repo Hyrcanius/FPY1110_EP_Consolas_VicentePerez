@@ -65,8 +65,20 @@ def buscar_con(consolas, ventas):
         print(f"Año lanz.        :  {consolas[sigla][2]}")
         print(f"Precio           :  ${ventas[sigla][0]}")
         print(f"Stock            :  {ventas[sigla][1]} unidades")
+        return sigla
     else:
         print("Consola no encontrada.")
+        return False
+    
+def elim_con(consolas, ventas):
+    resultado = buscar_con(consolas, ventas)
+    if resultado == False:
+        print("No se encontró la consola.")
+    else:
+        del consolas[resultado]
+        del ventas[resultado]
+        print("Consola eliminada.")
+
 
 def val_sigla(consolas, sigla):
     if len(sigla) < 2 or len(sigla) > 5:
@@ -123,7 +135,7 @@ while True:
     elif op == 2:
         buscar_con(consolas, ventas)
     elif op == 3:
-        pass
+        elim_con(consolas, ventas)
     elif op == 4:
         pass
     elif op == 5:
